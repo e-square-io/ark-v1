@@ -18,5 +18,34 @@
         "accessToken": "N2FmYmRkM2QtOWRiOC00MzVjLWE1ZGYtMjIzZDQ0OTgxYzdmfHJlYWQtd3JpdGU="
       }
     }
-  }
+  },
+  "generators": {
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress",
+      "strict": true,
+      "prefix": "ark"
+    },
+    "@nrwl/angular:library": {
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "strict": true,
+      "prefix": "ark",
+      "buildable": true
+    },
+    "@nrwl/angular:component": {
+      "style": "scss",
+      "changeDetection": "OnPush"
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "workspaceLayout": {
+    "appsDir": "dev-apps",
+    "libsDir": "packages"
+  },
+  "defaultProject": "dev-app"
 }
