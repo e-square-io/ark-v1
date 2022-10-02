@@ -1,0 +1,29 @@
+<div class="form-wrapper">
+  <h1>Login</h1>
+  <form action="." [formGroup]="form" (ngSubmit)="login()">
+    <div class="form-row">
+      <label for="username">Username:</label>
+      <input
+        type="text"
+        name="username"
+        id="username"
+        placeholder="Username"
+        formControlName="username"
+      />
+    </div>
+    <div class="form-row">
+      <label for="password">Password:</label>
+      <input
+        type="password"
+        name="password"
+        id="password"
+        placeholder="Password"
+        formControlName="password"
+      />
+    </div>
+    <footer class="footer">
+      <p class="error"></p>
+      <button type="submit">Login</button>
+    </footer>
+  </form>
+</div>

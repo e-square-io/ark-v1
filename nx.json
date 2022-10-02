@@ -9,12 +9,7 @@
     "default": {
       "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e"
-        ],
+        "cacheableOperations": ["build", "lint", "test", "e2e"],
         "accessToken": "N2FmYmRkM2QtOWRiOC00MzVjLWE1ZGYtMjIzZDQ0OTgxYzdmfHJlYWQtd3JpdGU="
       }
     }
@@ -24,20 +19,26 @@
       "style": "scss",
       "linter": "eslint",
       "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress",
+      "e2eTestRunner": "none",
       "strict": true,
-      "prefix": "ark"
+      "prefix": "ark",
+      "standalone": true
     },
     "@nrwl/angular:library": {
       "linter": "eslint",
       "unitTestRunner": "jest",
       "strict": true,
       "prefix": "ark",
-      "buildable": true
+      "buildable": true,
+      "standalone": true
     },
     "@nrwl/angular:component": {
+      "standalone": true,
       "style": "scss",
       "changeDetection": "OnPush"
+    },
+    "@nrwl/angular:guard": {
+      "implements": ["CanActivate", "CanActivateChild", "CanDeactivate", "CanLoad"]
     }
   },
   "cli": {
@@ -46,6 +47,14 @@
   "workspaceLayout": {
     "appsDir": "dev-apps",
     "libsDir": "packages"
+  },
+  "targetDefaults": {
+    "test": {
+      "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"]
+    },
+    "lint": {
+      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
+    }
   },
   "defaultProject": "dev-app"
 }
