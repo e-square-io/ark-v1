@@ -30,15 +30,21 @@
       "strict": true,
       "prefix": "ark",
       "buildable": true,
+      "publishable": true,
       "standalone": true
     },
     "@nrwl/angular:component": {
-      "standalone": true,
       "style": "scss",
+      "standalone": true,
       "changeDetection": "OnPush"
     },
     "@nrwl/angular:guard": {
-      "implements": ["CanActivate", "CanActivateChild", "CanDeactivate", "CanLoad"]
+      "implements": [
+        "CanActivate",
+        "CanActivateChild",
+        "CanDeactivate",
+        "CanLoad"
+      ]
     }
   },
   "cli": {

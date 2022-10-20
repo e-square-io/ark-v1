@@ -21,9 +21,18 @@
         formControlName="password"
       />
     </div>
-    <footer class="footer">
-      <p class="error"></p>
-      <button type="submit">Login</button>
+    <footer
+      class="footer"
+      *ngIf="componentStore.status$ | async as componentStatus"
+    >
+      <div class="error-wrapper">
+        <p class="error" *ngIf="componentStatus.status === 'error'">
+          {{ componentStatus.error?.message }}
+        </p>
+      </div>
+      <button type="submit" [disabled]="componentStatus.status === 'busy'">
+        Login
+      </button>
     </footer>
   </form>
 </div>

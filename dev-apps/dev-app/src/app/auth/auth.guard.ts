@@ -11,20 +11,22 @@ import {
   UrlSegment,
   UrlTree,
 } from '@angular/router';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
+
+import { SessionStore } from './session.store';
+import { User } from './user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate, CanActivateChild, CanDeactivate<unknown>, CanLoad {
-  constructor(private readonly router: Router) {}
+  constructor(private readonly router: Router, private readonly sessionStore: SessionStore) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log('TODO: Check if logged in');
-    return this.router.createUrlTree(['login']);
+    return this.sessionStore.select('user').pipe(map(user => (user ? true : this.router.createUrlTree(['login']))));
   }
   canActivateChild(
     childRoute: ActivatedRouteSnapshot,
