@@ -7,7 +7,7 @@
   "targets": {
     "build": {
       "executor": "@nrwl/angular:package",
-      "outputs": ["dist/packages/ark"],
+      "outputs": ["{workspaceRoot}/dist/packages/ark"],
       "options": {
         "project": "packages/ark/ng-package.json"
       },
@@ -23,7 +23,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/ark"],
+      "outputs": ["{workspaceRoot}/coverage/packages/ark"],
       "options": {
         "jestConfig": "packages/ark/jest.config.ts",
         "passWithNoTests": true
