@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { createComponentStore } from '@groupp/ark';
+import { createStore } from '@groupp/ark';
 import { catchError, EMPTY, Subject, takeUntil } from 'rxjs';
 
 import { AuthService } from '../auth/auth.service';
@@ -25,7 +25,7 @@ interface LoginForm {
 })
 export class LoginComponent implements OnDestroy {
   private readonly destroy$ = new Subject<void>();
-  readonly componentStore = createComponentStore();
+  readonly componentStore = createStore(undefined, { withStatus: true });
 
   readonly form = new FormGroup<LoginForm>({
     username: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),

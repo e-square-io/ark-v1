@@ -14,7 +14,6 @@ import {
 import { map, Observable } from 'rxjs';
 
 import { SessionStore } from './session.store';
-import { User } from './user';
 
 @Injectable({
   providedIn: 'root',
