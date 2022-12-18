@@ -1,9 +1,32 @@
 {
-  "name": "@groupp/ark",
-  "version": "0.0.1",
+  "name": "@e-square/ark",
+  "version": "1.0.0-next.1",
+  "description": "State management tailor-made for Angular",
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/e-square-io/ark.git"
+  },
+  "bugs": {
+    "url": "https://github.com/e-square-io/ark/issues"
+  },
+  "keywords": [
+    "state management",
+    "reactive state management",
+    "reactive store",
+    "angular state management",
+    "ark"
+  ],
+  "author": {
+    "name": "Arthur Groupp",
+    "email": "arth.groupp@gmail.com"
+  },
   "peerDependencies": {
-    "@angular/common": "^14.2.0",
-    "@angular/core": "^14.2.0"
+    "@angular/common": "^15.0.4",
+    "@angular/core": "^15.0.4"
   },
   "dependencies": {
     "tslib": "^2.3.0"
