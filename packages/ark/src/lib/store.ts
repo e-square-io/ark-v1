@@ -1,6 +1,6 @@
-import { ArkStore, StoreConfiguration } from './entities';
+import { ArkStore, StatusState, StoreConfiguration } from './entities';
 import { mixinStore, StoreConstructor } from './mixins';
-import { RxjsStateProvider, RxjsStatusProvider } from './providers';
+import { RxjsStateProvider, StatusProvider } from './providers';
 
 /**
  * Abstraction to extend to create the store
@@ -11,13 +11,18 @@ export function Store<State>(config?: StoreConfiguration<State>): StoreConstruct
   const stateProvider = config?.provider ? config.provider : RxjsStateProvider<State>;
   const statusProvider = config?.withStatus
     ? typeof config.withStatus === 'boolean'
-      ? RxjsStatusProvider
+      ? StatusProvider<StatusState>({ providerBase: RxjsStateProvider<StatusState> })
       : config.withStatus
     : undefined;
   return mixinStore<State>(stateProvider, statusProvider);
 }
 
-export function createStore<State>(initialState?: State, config?: StoreConfiguration<State>): ArkStore<State> {
+/**
+ * Create store of `State` local instance. Use it inside the components
+ * for local component store or view model. This instance won't be added
+ * to `injector`, so I won't be able to inject it in child components.
+ */
+export function createStore<State>(initialState: State, config?: StoreConfiguration<State>): ArkStore<State> {
   const store = Store<State>(config);
 
   return new store(initialState);

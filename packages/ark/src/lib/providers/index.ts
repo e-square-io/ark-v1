@@ -1,3 +1,3 @@
 export * from './rxjs-state-provider';
-export * from './rxjs-status-provider';
-export * from './rxjs-state-with-storage-provider';
+export * from './status-provider';
+export * from './state-with-storage-provider';

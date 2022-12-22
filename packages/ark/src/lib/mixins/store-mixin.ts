@@ -19,8 +19,12 @@ export function mixinStore<State>(
 ): StoreConstructor<State> {
   return class implements ArkStore<State> {
     protected readonly viewRef = inject(ChangeDetectorRef, { optional: true }) as ViewRef | null;
-    protected readonly provider = new stateProvider();
+    protected readonly provider: StateProvider<State>;
     protected readonly statusProvider = statusProvider ? new statusProvider() : undefined;
+
+    get value(): State {
+      return this.provider.getValue();
+    }
 
     get status$(): Observable<StatusState> {
       if (!this.statusProvider) {
@@ -30,8 +34,8 @@ export function mixinStore<State>(
       return this.statusProvider.selectState(state => state);
     }
 
-    constructor() {
-      // TODO initial state
+    constructor(initialState: State) {
+      this.provider = new stateProvider(initialState);
       setTimeout(() => this.viewRef?.onDestroy(() => this.destroy()), 0);
     }
 
@@ -86,6 +90,11 @@ export function mixinStore<State>(
       }
 
       this.statusProvider.setState({ ...this.statusProvider.state, ...statusUpdate });
+    }
+
+    reset(): void {
+      this.provider.reset();
+      this.statusProvider?.reset();
     }
 
     destroy(): void {

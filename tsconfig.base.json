@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@groupp/ark": ["packages/ark/src/index.ts"]
+      "@e-square/ark": ["packages/ark/src/index.ts"],
+      "@e-square/ark/testing": ["packages/ark/testing/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

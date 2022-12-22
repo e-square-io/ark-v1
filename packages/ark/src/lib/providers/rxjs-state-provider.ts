@@ -13,8 +13,8 @@ export class RxjsStateProvider<State> implements StateProvider<State> {
     return this._state;
   }
 
-  constructor(protected readonly initialState?: State) {
-    this._state = initialState ? initialState : ({} as State);
+  constructor(protected readonly initialState: State) {
+    this._state = initialState;
     this.stateSubject$.next(this._state);
   }
 
