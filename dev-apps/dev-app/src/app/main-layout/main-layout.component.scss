@@ -1,0 +1,44 @@
+.tooltip {
+  display: flex;
+  visibility: hidden;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 0.25rem;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1000;
+  right: 0;
+  bottom: -75%;
+
+  opacity: 0;
+  transition: 0.3s opacity;
+}
+
+.main-header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 4rem;
+  padding: 0 1rem;
+
+  .user-avatar {
+    position: relative;
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: cadetblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    border-radius: 50%;
+    line-height: 1;
+    margin-left: 1rem;
+
+    &:hover .tooltip {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+}

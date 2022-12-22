@@ -24,4 +24,8 @@ export class AuthService {
       tap(user => this.sessionStore.update({ user })),
     );
   }
+
+  logout(): void {
+    this.sessionStore.reset();
+  }
 }

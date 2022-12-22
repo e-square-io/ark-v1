@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Store, RxjsStateWithStorageProvider } from '@groupp/ark';
+import { Store, StateWithStorageProvider, RxjsStateProvider } from '@e-square/ark';
 
 import { User } from './user';
 
@@ -9,9 +9,11 @@ export interface SessionState {
 
 @Injectable({ providedIn: 'root' })
 export class SessionStore extends Store<SessionState>({
-  provider: RxjsStateWithStorageProvider({ storage: 'localStorage', name: 'SessionStore' }),
+  provider: StateWithStorageProvider({
+    storage: 'localStorage',
+    name: 'SessionStore',
+    providerBase: RxjsStateProvider,
+  }),
 }) {
-  // constructor() {
-  //   super(undefined, { storage: 'localStorage' });
-  // }
+  readonly user$ = this.select('user');
 }

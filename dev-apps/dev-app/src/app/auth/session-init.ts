@@ -1,4 +1,4 @@
-import { attachInitEffect } from '@groupp/ark';
+import { attachInitEffect } from '@e-square/ark';
 
 import { SessionStore } from './session.store';
 
