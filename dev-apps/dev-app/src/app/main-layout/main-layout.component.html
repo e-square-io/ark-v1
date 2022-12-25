@@ -1,5 +1,10 @@
 <header class="main-header">
-  <div class="logo">Ark</div>
+  <div class="logo">
+    <a routerLink="/">Ark</a>
+  </div>
+  <div class="links">
+    <a routerLink="/async-demo">Async Demo</a>
+  </div>
   <div class="spacer"></div>
   <button (click)="logout()">Logout</button>
   <div class="user-avatar" *ngIf="session.user$ | async as user">
@@ -7,4 +12,6 @@
     <span class="user-name tooltip">{{ user?.username }}</span>
   </div>
 </header>
-<p>main-layout works!</p>
+<main>
+  <router-outlet></router-outlet>
+</main>
