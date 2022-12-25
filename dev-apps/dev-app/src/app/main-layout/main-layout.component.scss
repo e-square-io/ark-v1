@@ -21,6 +21,11 @@
   width: 100%;
   min-height: 4rem;
   padding: 0 1rem;
+  border-bottom: 1px solid #555;
+
+  .logo {
+    margin-right: 1rem;
+  }
 
   .user-avatar {
     position: relative;
@@ -40,5 +45,8 @@
       opacity: 1;
     }
   }
+}
 
+main {
+  padding: 1rem;
 }

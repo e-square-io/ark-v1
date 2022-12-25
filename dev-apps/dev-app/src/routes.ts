@@ -8,5 +8,11 @@ export const routes: Routes = [
     path: '',
     loadComponent: () => import('./app/main-layout/main-layout.component').then(c => c.MainLayoutComponent),
     canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'async-demo',
+        loadComponent: () => import('./app/async-demo/async-demo.component').then(c => c.AsyncDemoComponent),
+      },
+    ],
   },
 ];

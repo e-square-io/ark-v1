@@ -1,0 +1,50 @@
+<header class="header">
+  <p>Checks in container component: {{ checkCount }}</p>
+  <div class="spacer"></div>
+  <div class="controls">
+    <label>
+      Regular Async Pipe
+      <input
+        type="radio"
+        name="mode"
+        value="async-pipe"
+        [formControl]="modeControl"
+      />
+    </label>
+    <label>
+      Async Directive
+      <input
+        type="radio"
+        name="mode"
+        value="async-directive"
+        [formControl]="modeControl"
+      />
+    </label>
+    <label>
+      Select Directive
+      <input
+        type="radio"
+        name="mode"
+        value="select-directive"
+        [formControl]="modeControl"
+      />
+    </label>
+  </div>
+</header>
+<section class="content">
+  <ng-container [ngSwitch]="mode">
+    <div class="clock" *ngSwitchCase="'async-pipe'">
+      <span>{{ time$ | async | date : 'HH:mm:ss' }}</span>
+    </div>
+    <div class="clock" *ngSwitchCase="'async-directive'">
+      <ng-container *arkAsync="let time; from: time$">
+        <span>{{ time | date : 'HH:mm:ss' }}</span>
+      </ng-container>
+    </div>
+    <div class="clock" *ngSwitchCase="'select-directive'">
+      <ng-container *arkSelect="let time; from: timeStore; by: 'timestamp'">
+        <span>{{ time | date : 'HH:mm:ss' }}</span>
+      </ng-container>
+    </div>
+  </ng-container>
+</section>

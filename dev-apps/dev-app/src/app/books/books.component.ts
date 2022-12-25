@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'ark-books',
@@ -9,8 +9,4 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
   styleUrls: ['./books.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BooksComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
-}
+export class BooksComponent {}
