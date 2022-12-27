@@ -1,0 +1,17 @@
+{
+  "types": [
+    {"type": "package", "hidden": false},
+    {"type": "feat", "hidden": false},
+    {"type": "test", "hidden": false}
+  ],
+  "packageFiles": [
+    {
+      "filename": "package.json",
+      "type": "json"
+    },
+    {
+      "filename": "packages/ark/package.json",
+      "type": "json"
+    }
+  ]
+}

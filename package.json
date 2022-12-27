@@ -4,7 +4,9 @@
   "license": "MIT",
   "scripts": {
     "commit": "git-cz",
-    "postinstall": "ngcc --properties es2020 browser module main"
+    "postinstall": "ngcc --properties es2020 browser module main",
+    "release": "standard-version release -t @e-square/ark\\@ --release-as major",
+    "prerelease": "standard-version release -t @e-square/ark\\@ --release-as major --prerelease next"
   },
   "private": true,
   "devDependencies": {
