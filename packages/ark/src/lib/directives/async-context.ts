@@ -1,7 +1,11 @@
 export class AsyncContext<T> {
-  $implicit?: T;
+  private _value?: T;
+
+  get $implicit(): T | undefined {
+    return this._value;
+  }
 
   update(value: T): void {
-    this.$implicit = value;
+    this._value = value;
   }
 }

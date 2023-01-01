@@ -1,8 +1,9 @@
 import { Observable } from 'rxjs';
 
-import { SelectStateFunction, UpdateStateFunction } from './projection-functions';
+import { ConnectionProjectionFn, SelectStateFunction, UpdateStateFunction } from './projection-functions';
 import { StatusState } from './status-state';
 
+export type UnknownState = Record<string, unknown>;
 export type SelectKey<State> = keyof State;
 
 /**
@@ -20,6 +21,11 @@ export interface ArkStore<State> {
   status$?: Observable<StatusState>;
 
   /**
+   * Emits once when the store is destroyed.
+   */
+  destroy$: Observable<void>;
+
+  /**
    * Update the store's value.
    *
    * @example
@@ -27,6 +33,15 @@ export interface ArkStore<State> {
    * store.update({ x: 42 });
    */
   update(updateObj: Partial<State>): void;
+
+  /**
+   * Update the store's value.
+   *
+   * @example
+   *
+   * store.update<'query'>(query, 'Angular');
+   */
+  update<Key extends keyof State>(key: Key, value: State[Key]): void;
 
   /**
    * Update the store's value.
@@ -68,6 +83,19 @@ export interface ArkStore<State> {
     arg?: SelectStateFunction<State, Result> | SelectKey<State>,
     distinctKeys?: SelectKey<State>[],
   ): Observable<Result | State>;
+
+  /**
+   * Connect an observable to store. Any value by the observable
+   * will update the store.
+   */
+  connect(source$: Observable<Partial<State>>): void;
+  connect<Key extends keyof State>(source$: Observable<State[Key]>, key: Key): void;
+  connect(source$: Observable<Partial<State>>, projectionFn: ConnectionProjectionFn<State>): void;
+  connect<Key extends keyof State>(source$: Observable<State | State[Key]>, key?: Key): void;
+
+  disconnect(): void;
+  disconnect<Key extends keyof State>(key: Key | 'func'): void;
+  disconnect<Key extends keyof State>(key?: Key): void;
 
   /**
    * Update the store's status value. You can specify the status

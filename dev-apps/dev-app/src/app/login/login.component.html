@@ -25,16 +25,18 @@
     </div>
     <footer
       class="footer"
-      *ngIf="componentStore.status$ | async as componentStatus"
+      *arkSelectStatus="
+        let status = status;
+        let error = errorMessage;
+        from: componentStore
+      "
     >
       <div class="error-wrapper">
-        <p class="error" *ngIf="componentStatus.status === 'error'">
-          {{ componentStatus.error?.message }}
+        <p class="error" *ngIf="status === 'error'">
+          {{ error }}
         </p>
       </div>
-      <button type="submit" [disabled]="componentStatus.status === 'busy'">
-        Login
-      </button>
+      <button type="submit" [disabled]="status === 'busy'">Login</button>
     </footer>
   </form>
 </div>

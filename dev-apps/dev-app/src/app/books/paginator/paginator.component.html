@@ -1,0 +1,17 @@
+<div class="wrapper" *ngIf="totalPages > 0">
+  <button [disabled]="currentPage < 2" (click)="page.emit(currentPage - 1)">
+    <
+  </button>
+  <div class="content">
+    Page
+    <span>{{ currentPage }}</span>
+    of
+    <span>{{ totalPages }}</span>
+  </div>
+  <button
+    [disabled]="currentPage === totalPages"
+    (click)="page.emit(currentPage + 1)"
+  >
+    >
+  </button>
+</div>

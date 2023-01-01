@@ -8,7 +8,7 @@ export function createStoreMock<State>(initialState: State): StoreMock<State> {
     value: initialState,
     status$: new ReplaySubject<State>(),
     update: jest.fn(),
-    select: jest.fn(),
+    select: jest.fn(() => new ReplaySubject<any>()),
     updateStatus: jest.fn(),
     reset: jest.fn(),
     destroy: jest.fn(),

@@ -1,0 +1,12 @@
+<pre>
+  <code>
+    {{ codeSnippet }}
+  </code>  
+</pre>
+<div class="form-row" *ngIf="inputControl">
+  <input type="text" [formControl]="inputControl" />
+  <button *ngIf="!isConnected" (click)="action.emit('connect')">Connect</button>
+  <button *ngIf="isConnected" (click)="action.emit('disconnect')">
+    Disconnect
+  </button>
+</div>
