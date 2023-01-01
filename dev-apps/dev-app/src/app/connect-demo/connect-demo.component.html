@@ -1,0 +1,36 @@
+<section class="section">
+  <h2>Full Store Connection</h2>
+  <ark-connect-demo-widget
+    [codeSnippet]="codeSnippets[0]"
+    [inputControl]="inputs[0]"
+    [isConnected]="connections[0]"
+    (action)="act($event, 0)"
+  ></ark-connect-demo-widget>
+  <div class="result" *arkSelect="let result; from: stores[0]">
+    <p>{{ result | json }}</p>
+  </div>
+</section>
+<section class="section">
+  <h2>Store Connection With Key</h2>
+  <ark-connect-demo-widget
+    [codeSnippet]="codeSnippets[1]"
+    [inputControl]="inputs[1]"
+    [isConnected]="connections[1]"
+    (action)="act($event, 1)"
+  ></ark-connect-demo-widget>
+  <div class="result" *arkSelect="let result; from: stores[1]">
+    <p>{{ result | json }}</p>
+  </div>
+</section>
+<section class="section">
+  <h2>Store Connection With Projection Function</h2>
+  <ark-connect-demo-widget
+    [codeSnippet]="codeSnippets[2]"
+    [inputControl]="inputs[2]"
+    [isConnected]="connections[2]"
+    (action)="act($event, 2)"
+  ></ark-connect-demo-widget>
+  <div class="result" *arkSelect="let result; from: stores[2]">
+    <p>{{ result | json }}</p>
+  </div>
+</section>

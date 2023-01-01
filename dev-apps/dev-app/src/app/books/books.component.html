@@ -1,1 +1,26 @@
-<p>books works!</p>
+<section class="search-section">
+  <div class="q">
+    <input
+      type="text"
+      name="q"
+      placeholder="Book name or author"
+      [formControl]="searchControl"
+    />
+  </div>
+  <ng-container
+    *arkSelect="let paginationData; from: booksStore; by: 'paginationData'"
+  >
+    <ark-paginator
+      [paginationData]="paginationData"
+      (page)="updatePage($event)"
+    ></ark-paginator>
+  </ng-container>
+</section>
+<ng-container *arkSelectStatus="let busy = busy; from: booksStore">
+  <div class="loader" *ngIf="busy">Loading...</div>
+</ng-container>
+<section class="content">
+  <ng-container *arkSelect="let books; from: booksStore; by: 'items'">
+    <ark-book-widget *ngFor="let book of books" [book]="book"></ark-book-widget>
+  </ng-container>
+</section>

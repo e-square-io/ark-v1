@@ -2,7 +2,7 @@
 import { Directive, Input, OnChanges, OnDestroy } from '@angular/core';
 import { Observable, Subscription, takeUntil, tap } from 'rxjs';
 
-import { ArkStore } from '../entities';
+import { ArkStore, UnknownState } from '../entities';
 import { ArkAsyncBase } from './ark-async-base';
 
 /**
@@ -20,13 +20,13 @@ import { ArkAsyncBase } from './ark-async-base';
   selector: '[arkSelect],[arkSelectFrom],[arkSelectBy]',
   standalone: true,
 })
-export class ArkSelect<T> extends ArkAsyncBase<T | T[keyof T]> implements OnChanges, OnDestroy {
+export class ArkSelect extends ArkAsyncBase<unknown> implements OnChanges, OnDestroy {
   private selectSubscription?: Subscription;
-  private store?: ArkStore<T>;
-  private key?: string;
+  private store?: ArkStore<unknown>;
+  private key?: keyof UnknownState;
 
   @Input()
-  set arkSelectFrom(store: ArkStore<T>) {
+  set arkSelectFrom(store: ArkStore<unknown>) {
     this.store = store;
   }
 
@@ -40,7 +40,9 @@ export class ArkSelect<T> extends ArkAsyncBase<T | T[keyof T]> implements OnChan
       throw new Error('Store is mandatory.');
     }
 
-    const select$: Observable<T[keyof T] | T> = this.key ? this.store.select(this.key as keyof T) : this.store.select();
+    const select$: Observable<unknown> = this.key
+      ? this.store.select(state => (state as UnknownState)[this.key as keyof UnknownState])
+      : this.store.select();
     this.selectSubscription?.unsubscribe();
     this.selectSubscription = select$
       .pipe(

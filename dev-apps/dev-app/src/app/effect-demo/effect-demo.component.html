@@ -1,0 +1,29 @@
+<form action="." [formGroup]="form" (ngSubmit)="submit()">
+  <h2>Data Request</h2>
+  <div class="form-row">
+    <label for="a">A:</label>
+    <input type="text" id="a" formControlName="a" />
+  </div>
+  <div class="form-row">
+    <label for="b">B:</label>
+    <input type="text" id="b" formControlName="b" />
+  </div>
+  <div class="form-row">
+    <ng-container *arkSelectStatus="let busy = busy; from: store">
+      <button type="submit" [disabled]="busy">Go!</button>
+      <p *ngIf="busy">Loading...</p>
+    </ng-container>
+  </div>
+</form>
+<ng-container
+  *arkSelectStatus="let status = status; let error = errorMessage; from: store"
+>
+  <section class="result" *ngIf="status === 'success'; else err">
+    <ng-container *arkSelect="let result; from: store; by: 'result'">
+      <p *ngIf="result">Result: {{ result | json }}</p>
+    </ng-container>
+  </section>
+  <ng-template #err>
+    <p *ngIf="status === 'error'" class="error">Error: {{ error }}</p>
+  </ng-template>
+</ng-container>

@@ -21,11 +21,15 @@ import { ArkAsyncBase } from './ark-async-base';
   selector: '[arkAsync],[arkAsyncFrom]',
   standalone: true,
 })
-export class ArkAsync<T = unknown> extends ArkAsyncBase<T> {
+export class ArkAsync<T = unknown> extends ArkAsyncBase<T | undefined | null> {
   private subscription?: Subscription;
 
   @Input()
-  set arkAsyncFrom(obs$: Observable<T>) {
+  set arkAsyncFrom(obs$: Observable<T | null> | undefined | null) {
+    if (!obs$) {
+      return;
+    }
+
     this.subscription?.unsubscribe();
 
     this.subscription = obs$

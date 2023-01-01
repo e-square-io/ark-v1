@@ -16,4 +16,8 @@ export class SessionStore extends Store<SessionState>({
   }),
 }) {
   readonly user$ = this.select('user');
+
+  constructor() {
+    super({});
+  }
 }

@@ -1,0 +1,7 @@
+<div class="img" *ngIf="book?.imageLinks?.smallThumbnail">
+  <img [src]="book?.imageLinks?.smallThumbnail" />
+</div>
+<div class="content">
+  <p class="title">{{ book?.title }}</p>
+  <p class="description">{{ book?.description }}</p>
+</div>

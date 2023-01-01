@@ -14,6 +14,10 @@ export class RxjsStateProvider<State> implements StateProvider<State> {
   }
 
   constructor(protected readonly initialState: State) {
+    if (!initialState) {
+      throw Error('No initial state was provided. The store must be initialized with the initial value.');
+    }
+
     this._state = initialState;
     this.stateSubject$.next(this._state);
   }

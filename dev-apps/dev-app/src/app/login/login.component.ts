@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { createStore } from '@e-square/ark';
+import { ArkSelectStatus, createStore } from '@e-square/ark';
 import { catchError, EMPTY, Subject, takeUntil } from 'rxjs';
 
 import { AuthService } from '../auth/auth.service';
@@ -18,7 +18,7 @@ interface LoginForm {
 @Component({
   selector: 'ark-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, ArkSelectStatus],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

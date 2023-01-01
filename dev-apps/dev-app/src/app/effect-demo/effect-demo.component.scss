@@ -1,0 +1,17 @@
+:host {
+  padding: 1rem;
+}
+
+.form-row label {
+  font-weight: 600;
+  margin-right: 1rem;
+}
+
+button[type=submit] {
+  margin-right: 1rem;
+}
+
+.error {
+  color: #ff0000;
+  font-size: 0.8rem;
+}

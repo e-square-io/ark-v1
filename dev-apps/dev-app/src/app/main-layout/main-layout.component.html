@@ -4,11 +4,14 @@
   </div>
   <div class="links">
     <a routerLink="/async-demo">Async Demo</a>
+    <a routerLink="/connect-demo">Connect Demo</a>
+    <a routerLink="/effect-demo">Effect Demo</a>
+    <a routerLink="/books-demo">Books Demo</a>
   </div>
   <div class="spacer"></div>
   <button (click)="logout()">Logout</button>
-  <div class="user-avatar" *ngIf="session.user$ | async as user">
-    {{ user.username.slice(0, 1).toUpperCase() }}
+  <div class="user-avatar" *arkSelect="let user; from: session; by: 'user'">
+    {{ user?.username.slice(0, 1).toUpperCase() }}
     <span class="user-name tooltip">{{ user?.username }}</span>
   </div>
 </header>
