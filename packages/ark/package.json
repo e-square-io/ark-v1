@@ -1,11 +1,12 @@
 {
   "name": "@e-square/ark",
-  "version": "1.0.0-next.1",
+  "version": "1.0.0-next.0",
   "description": "State management tailor-made for Angular",
   "publishConfig": {
     "access": "public"
   },
   "license": "MIT",
+  "homepage": "https://github.com/e-square-io/ark#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/e-square-io/ark.git"

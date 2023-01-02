@@ -1,12 +1,12 @@
 {
   "name": "ark",
-  "version": "0.0.0",
+  "version": "1.0.0-next.0",
   "license": "MIT",
   "scripts": {
     "commit": "git-cz",
     "postinstall": "ngcc --properties es2020 browser module main",
-    "release": "standard-version release -t @e-square/ark\\@ --release-as major",
-    "prerelease": "standard-version release -t @e-square/ark\\@ --release-as major --prerelease next",
+    "release": "standard-version release -t @e-square/ark@ --release-as major",
+    "prerelease": "standard-version release -t @e-square/ark@ --release-as major --prerelease next",
     "docs:start": "nx start docs",
     "docs:build": "nx build docs"
   },
