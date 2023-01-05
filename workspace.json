@@ -3,6 +3,9 @@
   "version": 2,
   "projects": {
     "ark": "packages/ark",
-    "dev-app": "dev-apps/dev-app"
+    "dev-app": "dev-apps/dev-app",
+    "docs": {
+      "root": "docs"
+    }
   }
 }
