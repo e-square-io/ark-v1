@@ -1,9 +1,9 @@
 /* eslint-disable @angular-eslint/directive-class-suffix */
-import { Directive, Input, OnChanges, OnDestroy } from '@angular/core';
-import { Observable, Subscription, takeUntil, tap } from 'rxjs';
+import { Directive, inject, Input, OnChanges, OnDestroy, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Observable, Subscription, Subject, takeUntil, tap } from 'rxjs';
 
 import { ArkStore, UnknownState } from '../entities';
-import { ArkAsyncBase } from './ark-async-base';
+import { AsyncContext } from './async-context';
 
 /**
  * Extended version of `ArkAsync` directive.
@@ -20,13 +20,18 @@ import { ArkAsyncBase } from './ark-async-base';
   selector: '[arkSelect],[arkSelectFrom],[arkSelectBy]',
   standalone: true,
 })
-export class ArkSelect extends ArkAsyncBase<unknown> implements OnChanges, OnDestroy {
+export class ArkSelect<T extends UnknownState, S extends ArkStore<T>> implements OnChanges, OnDestroy {
+  private readonly destroy$ = new Subject<void>();
+  private readonly templateRef = inject(TemplateRef<AsyncContext<T>>);
+  private readonly viewContainerRef = inject(ViewContainerRef);
+  private readonly context = new AsyncContext<T>();
+  private readonly view = this.viewContainerRef.createEmbeddedView<AsyncContext<T>>(this.templateRef, this.context);
   private selectSubscription?: Subscription;
-  private store?: ArkStore<unknown>;
+  private store?: S;
   private key?: keyof UnknownState;
 
   @Input()
-  set arkSelectFrom(store: ArkStore<unknown>) {
+  set arkSelectFrom(store: S) {
     this.store = store;
   }
 
@@ -35,13 +40,21 @@ export class ArkSelect extends ArkAsyncBase<unknown> implements OnChanges, OnDes
     this.key = key;
   }
 
+  static ngTemplateContextGuard<T extends UnknownState, S extends ArkStore<T>>(
+    dir: ArkSelect<T, S>,
+    ctx: unknown,
+  ): ctx is AsyncContext<T> {
+    return true;
+  }
+
   ngOnChanges(): void {
     if (!this.store) {
       throw new Error('Store is mandatory.');
     }
 
-    const select$: Observable<unknown> = this.key
-      ? this.store.select(state => (state as UnknownState)[this.key as keyof UnknownState])
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const select$: Observable<any> = this.key
+      ? this.store.select(state => state[this.key as keyof UnknownState])
       : this.store.select();
     this.selectSubscription?.unsubscribe();
     this.selectSubscription = select$
@@ -55,8 +68,8 @@ export class ArkSelect extends ArkAsyncBase<unknown> implements OnChanges, OnDes
       .subscribe();
   }
 
-  override ngOnDestroy(): void {
+  ngOnDestroy(): void {
     this.selectSubscription?.unsubscribe();
-    super.ngOnDestroy();
+    this.destroy$.next();
   }
 }

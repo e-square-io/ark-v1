@@ -1,8 +1,8 @@
 /* eslint-disable @angular-eslint/directive-class-suffix */
-import { Directive, Input } from '@angular/core';
-import { Observable, Subscription, takeUntil, tap } from 'rxjs';
+import { Directive, inject, Input, OnDestroy, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Observable, Subscription, Subject, takeUntil, tap } from 'rxjs';
 
-import { ArkAsyncBase } from './ark-async-base';
+import { AsyncContext } from './async-context';
 
 /**
  * Structural directive replacing `async` pipe. Accepts observable,
@@ -21,7 +21,12 @@ import { ArkAsyncBase } from './ark-async-base';
   selector: '[arkAsync],[arkAsyncFrom]',
   standalone: true,
 })
-export class ArkAsync<T = unknown> extends ArkAsyncBase<T | undefined | null> {
+export class ArkAsync<T> implements OnDestroy {
+  private readonly destroy$ = new Subject<void>();
+  private readonly templateRef = inject(TemplateRef<AsyncContext<T>>);
+  private readonly viewContainerRef = inject(ViewContainerRef);
+  private readonly context = new AsyncContext<T>();
+  private readonly view = this.viewContainerRef.createEmbeddedView<AsyncContext<T>>(this.templateRef, this.context);
   private subscription?: Subscription;
 
   @Input()
@@ -35,11 +40,19 @@ export class ArkAsync<T = unknown> extends ArkAsyncBase<T | undefined | null> {
     this.subscription = obs$
       .pipe(
         tap(value => {
-          this.context.update(value);
+          this.context.update(value ? value : undefined);
           this.view.detectChanges();
         }),
         takeUntil(this.destroy$),
       )
       .subscribe();
+  }
+
+  static ngTemplateContextGuard<T>(directive: ArkAsync<T>, context: unknown): context is AsyncContext<T> {
+    return true;
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
   }
 }

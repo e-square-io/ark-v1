@@ -68,11 +68,12 @@ export function mixinStore<State>(
     }
 
     select(): Observable<State>;
-    select<Key extends SelectKey<State>>(key: SelectKey<State>): Observable<State[Key]>;
-    select<Result>(
-      selectFunction: SelectStateFunction<State, Result>,
+    select<Key extends SelectKey<State>>(key: Key): Observable<State[Key]>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    select<Result extends (state: State) => any>(
+      selectFunction: Result,
       distinctKeys?: SelectKey<State>[],
-    ): Observable<Result>;
+    ): Observable<Result extends (state: State) => infer R ? R : never>;
     select<Result>(
       arg?: SelectStateFunction<State, Result> | SelectKey<State>,
       distinctKeys?: SelectKey<State>[],

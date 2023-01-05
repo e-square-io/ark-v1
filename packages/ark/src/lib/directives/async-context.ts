@@ -5,7 +5,7 @@ export class AsyncContext<T> {
     return this._value;
   }
 
-  update(value: T): void {
+  update(value: T | undefined): void {
     this._value = value;
   }
 }
