@@ -1,4 +1,4 @@
-import { StateProvider } from '../src';
+import { StateProvider } from '@e-square/ark';
 
 export class StateProviderMock<State> implements StateProvider<State> {
   state: State;

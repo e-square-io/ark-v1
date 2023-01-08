@@ -1,7 +1,7 @@
 import { waitForAsync } from '@angular/core/testing';
+import { StateProvider, StateProviderConstructor } from '@e-square/ark';
 import { skip } from 'rxjs';
 
-import { StateProvider, StateProviderConstructor } from '../src';
 import { createInitialState, INITIAL_A_VALUE, NEXT_VALUE_1, TestState } from './test-state';
 
 export function testProvider(providerConstructor: StateProviderConstructor<TestState>, providerName?: string): void {

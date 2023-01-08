@@ -1,6 +1,5 @@
+import { ArkStore } from '@e-square/ark';
 import { Observable, ReplaySubject } from 'rxjs';
-
-import { ArkStore } from '../src';
 
 export type StoreMock<State> = Partial<Record<keyof ArkStore<State>, jest.Mock | State | Observable<State>>>;
 export function createStoreMock<State>(initialState: State): StoreMock<State> {
