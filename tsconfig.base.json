@@ -16,7 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@e-square/ark": ["packages/ark/src/index.ts"],
-      "@e-square/ark/testing": ["packages/ark/testing/index.ts"]
+      "@e-square/ark/testing": ["packages/ark/testing/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

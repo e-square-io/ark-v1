@@ -32,7 +32,12 @@
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": ["packages/ark/**/*.ts", "packages/ark/**/*.html"]
+        "lintFilePatterns": [
+          "packages/ark/**/*.ts",
+          "packages/ark/**/*.html",
+          "packages/ark/testing/**/*.ts",
+          "packages/ark/testing/**/*.html"
+        ]
       }
     }
   },
