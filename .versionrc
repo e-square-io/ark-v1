@@ -6,10 +6,6 @@
   ],
   "packageFiles": [
     {
-      "filename": "package.json",
-      "type": "json"
-    },
-    {
       "filename": "packages/ark/package.json",
       "type": "json"
     }

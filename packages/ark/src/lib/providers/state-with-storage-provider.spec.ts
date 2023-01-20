@@ -5,7 +5,7 @@ import {
   createLocalStorageSpy,
   INITIAL_A_VALUE,
   NEXT_VALUE_1,
-} from '../../../testing';
+} from '../../../testing/src';
 import { StateProvider } from '../entities';
 import { RxjsStateProvider } from './rxjs-state-provider';
 import { StateWithStorageProvider } from './state-with-storage-provider';

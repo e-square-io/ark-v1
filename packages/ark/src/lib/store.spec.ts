@@ -8,7 +8,7 @@ import {
   StateProviderMock,
   STATE_MOCK,
   TestState,
-} from '../../testing';
+} from '../../testing/src';
 import { StateProvider } from './entities';
 import { Store } from './store';
 
