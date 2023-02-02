@@ -1,1 +1,1 @@
-export * from './store-mixin';
+export * from './store.mixin';

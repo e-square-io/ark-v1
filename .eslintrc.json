@@ -59,7 +59,15 @@
       "files": ["*.ts", "*.tsx"],
       "extends": ["plugin:@nrwl/nx/typescript"],
       "rules": {
-        "@typescript-eslint/explicit-function-return-type": ["error"],
+        "@typescript-eslint/explicit-function-return-type": [
+          "error", 
+          {
+            "allowExpressions": true,
+            "allowTypedFunctionExpressions": true,
+            "allowConciseArrowFunctionExpressionsStartingWithVoid": true,
+            "allowHigherOrderFunctions": false
+          }
+        ],
         "@typescript-eslint/member-ordering": [
           "warn",
           {

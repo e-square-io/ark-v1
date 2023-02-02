@@ -1,6 +1,7 @@
-export * from './lib/directives';
 export * from './lib/entities';
-export * from './lib/providers';
 export * from './lib/store';
-export * from './lib/utils';
-export * from './lib/effect';
+export * from './lib/status';
+export * from './lib/storage';
+
+export * from './lib/angular';
+export * from './lib/rxjs';

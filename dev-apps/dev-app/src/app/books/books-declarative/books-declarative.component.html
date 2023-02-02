@@ -1,0 +1,17 @@
+<section class="search-section">
+  <div class="q">
+    <input
+      type="text"
+      name="q"
+      placeholder="Book name or author"
+      [formControl]="searchControl"
+    />
+  </div>
+  <ark-paginator
+    [paginationData]="paginationData()"
+    (page)="updatePage($event)"
+  ></ark-paginator>
+</section>
+<section class="content">
+  <ark-book-widget *ngFor="let book of books()" [book]="book"></ark-book-widget>
+</section>

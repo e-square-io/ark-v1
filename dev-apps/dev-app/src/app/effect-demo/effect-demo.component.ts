@@ -1,7 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ArkAsync, ArkSelect, ArkSelectStatus, createEffect, createStore } from '@e-square/ark';
+import {
+  ArkAsync,
+  ArkSelect,
+  ArkSelectStatus,
+  ArkStore,
+  createEffect,
+  createStore,
+  HasStatus,
+  withStatus,
+} from '@e-square/ark';
 import { delay, Observable, of, Subject, switchMap, map, throwError } from 'rxjs';
 
 interface RequestData {
@@ -38,7 +47,11 @@ function requestData(a: string | number, b: string | number, responseTime = 1000
 })
 export class EffectDemoComponent {
   readonly submit$ = new Subject<RequestData>();
-  readonly store = createStore<EffectDemoComponentState>({}, { withStatus: true });
+  readonly store = createStore<EffectDemoComponentState, ArkStore<EffectDemoComponentState> & HasStatus>(
+    {},
+    undefined,
+    withStatus,
+  );
   readonly getData = createEffect<RequestData, EffectDemoComponentState>(
     req$ =>
       req$.pipe(

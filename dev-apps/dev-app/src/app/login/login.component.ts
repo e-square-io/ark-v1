@@ -2,7 +2,14 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ArkSelectStatus, createStore } from '@e-square/ark';
+import {
+  angularComponentDestroyer,
+  ArkSelectStatus,
+  ArkStore,
+  createStore,
+  HasStatus,
+  withStatus,
+} from '@e-square/ark';
 import { catchError, EMPTY, Subject, takeUntil } from 'rxjs';
 
 import { AuthService } from '../auth/auth.service';
@@ -25,14 +32,18 @@ interface LoginForm {
 })
 export class LoginComponent implements OnDestroy {
   private readonly destroy$ = new Subject<void>();
-  readonly componentStore = createStore({}, { withStatus: true });
+  readonly componentStore = createStore<object, ArkStore<object> & HasStatus>(
+    {},
+    { destroyer: angularComponentDestroyer },
+    withStatus,
+  );
 
   readonly form = new FormGroup<LoginForm>({
     username: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
     password: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
   });
 
-  constructor(private readonly authService: AuthService, private readonly router: Router) {
+  constructor(private readonly router: Router, private readonly authService: AuthService) {
     this.form?.valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.componentStore.updateStatus({ status: 'idle' }));

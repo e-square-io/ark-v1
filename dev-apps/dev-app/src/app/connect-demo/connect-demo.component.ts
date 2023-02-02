@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { ArkSelect, ArkStore, createStore } from '@e-square/ark';
+import { ArkSelect, ArkStore, connect, createStore } from '@e-square/ark';
 import { map, Observable } from 'rxjs';
 
 import { ConnectDemoWidgetComponent } from './connect-demo-widget/connect-demo-widget.component';
@@ -25,6 +25,7 @@ type Index = 0 | 1 | 2;
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConnectDemoComponent {
+  private subscriptions: (() => void)[] = [];
   readonly stores: ArkStore<ConnectionState>[] = [
     createStore<ConnectionState>(createInitialState()),
     createStore<ConnectionState>(createInitialState()),
@@ -39,14 +40,14 @@ export class ConnectDemoComponent {
   // eslint-disable-next-line prettier/prettier
   readonly codeSnippets: string[] = [`
 const state$: Observable<ConnectionState> = this.input.valueChanges.pipe(map(x => ({ x })));
-this.store.connect(state$);`,
+connect(this.store, state$);`,
     // eslint-disable-next-line prettier/prettier
 `
-this.store.connect(this.input.valueChanges, 'x');`,
+connect(this.store, this.input.valueChanges, 'x');`,
     // eslint-disable-next-line prettier/prettier
 `
 const state$: Observable<ConnectionState> = this.input.valueChanges.pipe(map(x => ({ x })));
-this.store.connect(state$, value => ({ x: \`prefix_\${value.x}\` }));`,
+connect(this.store, state$, value => ({ x: \`prefix_\${value.x}\` }));`,
   ];
 
   act(action: 'connect' | 'disconnect', index: Index): void {
@@ -68,20 +69,8 @@ this.store.connect(state$, value => ({ x: \`prefix_\${value.x}\` }));`,
   }
 
   private disconnect(index: Index): void {
-    switch (index) {
-      case 0:
-        this.stores[index].disconnect();
-        this.connections[index] = false;
-        break;
-      case 1:
-        this.stores[index].disconnect('x');
-        this.connections[index] = false;
-        break;
-      case 2:
-        this.stores[index].disconnect('func');
-        this.connections[index] = false;
-        break;
-    }
+    this.subscriptions[index]();
+    this.connections[index] = false;
   }
 
   private connectFullStore(index: Index): void {
@@ -90,7 +79,7 @@ this.store.connect(state$, value => ({ x: \`prefix_\${value.x}\` }));`,
     }
 
     const state$: Observable<ConnectionState> = this.inputs[index].valueChanges.pipe(map(x => ({ x })));
-    this.stores[index].connect(state$);
+    this.subscriptions[index] = connect(this.stores[index], state$);
     this.connections[index] = true;
   }
 
@@ -99,7 +88,7 @@ this.store.connect(state$, value => ({ x: \`prefix_\${value.x}\` }));`,
       return;
     }
 
-    this.stores[index].connect(this.inputs[index].valueChanges, key);
+    this.subscriptions[index] = connect(this.stores[index], this.inputs[index].valueChanges, key);
     this.connections[index] = true;
   }
 
@@ -109,7 +98,7 @@ this.store.connect(state$, value => ({ x: \`prefix_\${value.x}\` }));`,
     }
 
     const state$: Observable<ConnectionState> = this.inputs[index].valueChanges.pipe(map(x => ({ x })));
-    this.stores[index].connect(state$, value => ({ x: `prefix_${value.x}` }));
+    this.subscriptions[index] = connect(this.stores[index], state$, value => ({ x: `prefix_${value.x}` }));
     this.connections[index] = true;
   }
 }
